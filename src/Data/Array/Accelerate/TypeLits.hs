@@ -30,6 +30,8 @@ module Data.Array.Accelerate.TypeLits
               (./^),
               (.*#),
               (./#),
+              (.+^),
+              (.-^),
               -- ** AccMatrix & Vector
               (#*^),
               (^*#),
