@@ -282,9 +282,25 @@ a .*^ v = let v' = unVector v
 -- >     ⎝xₙ⎠   ⎝ xₙ/a ⎠
 a ./^ v = let v' = unVector v
           in AccVector $ A.map (/ a) v'
+          
+(.+^) :: forall n a. (KnownNat n, A.Num a, Elt a)
+      => Exp a -> AccVector n a -> AccVector n a
+-- | the usual multiplication of a scalar with a vector
+--
+-- >     ⎛x₁⎞   ⎛ a+x₁ ⎞
+-- >     ⎜x₂⎟   ⎜ a+x₂ ⎟
+-- >     ⎜. ⎟   ⎜  .   ⎟
+-- > a + ⎜. ⎟ = ⎜  .   ⎟
+-- >     ⎜. ⎟   ⎜  .   ⎟
+-- >     ⎜. ⎟   ⎜  .   ⎟
+-- >     ⎝xₙ⎠   ⎝ a+xₙ ⎠
+
+a .+^ v = let v' = unVector v
+          in AccVector $ A.map (+ a) v'
 
 infixl 7 .*^
 infixl 7 ./^
+infixl 7 .+^
 
 (.*#) :: forall m n a. (KnownNat m, KnownNat n, A.Num a, Elt a)
       => Exp a -> AccMatrix m n a -> AccMatrix m n a
