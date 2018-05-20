@@ -180,6 +180,22 @@ infixl 6 ^+^
 infixl 6 ^-^
 
 (^*^) :: forall n a. (KnownNat n, A.Num a, Elt a)
+      => AccVector n a -> AccVector n a -> AccVector a
+-- | the usual outer product of two vectors
+--
+-- > ⎛v₁⎞   ⎛w₁⎞   ⎛ v₁*w₁ ⎞
+-- > ⎜v₂⎟   ⎜w₂⎟   ⎜ v₂*w₁ ⎟
+-- > ⎜. ⎟   ⎜. ⎟   ⎜   .   ⎟
+-- > ⎜. ⎟ * ⎜. ⎟ = ⎜   .   ⎟
+-- > ⎜. ⎟   ⎜. ⎟   ⎜   .   ⎟
+-- > ⎜. ⎟   ⎜. ⎟   ⎜   .   ⎟
+-- > ⎝vₙ⎠   ⎝wₙ⎠   ⎝ vₙ*wₙ ⎠
+
+v ^*^ w = AccVector $ A.zipWith (*) (unVector v) (unVector w)
+
+infixl 7 ^*^
+
+(^.*^) :: forall n a. (KnownNat n, A.Num a, Elt a)
       => AccVector n a -> AccVector n a -> AccScalar a
 -- | the usual inner product of two vectors
 --
@@ -191,9 +207,9 @@ infixl 6 ^-^
 -- > ⎜. ⎟   ⎜. ⎟
 -- > ⎝vₙ⎠   ⎝wₙ⎠
 
-v ^*^ w = AccScalar $ A.sum $ A.zipWith (*) (unVector v) (unVector w)
+v ^.*^ w = AccScalar $ A.sum $ A.zipWith (*) (unVector v) (unVector w)
 
-infixl 7 ^*^
+infixl 7 ^.*^
 
 (#+#) :: forall m n a. (KnownNat m, KnownNat n, A.Num a, Elt a)
       => AccMatrix m n a -> AccMatrix m n a -> AccMatrix m n a
