@@ -28,9 +28,9 @@ module Data.Array.Accelerate.TypeLits
               -- ** Scalar & X
               (.*^),
               (./^),
+              (.+^),
               (.*#),
               (./#),
-              (.+^),
               -- ** AccMatrix & Vector
               (#*^),
               (^*#),
