@@ -38,7 +38,7 @@ module Data.Array.Accelerate.TypeLits
               (^+^),
               (^-^),
               (^*^),
-              (^.*^),
+              (^.^),
               -- ** AccMatrix & Matrix
               (#+#),
               (#-#),
@@ -196,7 +196,7 @@ v ^*^ w = AccVector $ A.zipWith (*) (unVector v) (unVector w)
 
 infixl 7 ^*^
 
-(^.*^) :: forall n a. (KnownNat n, A.Num a, Elt a)
+(^.^) :: forall n a. (KnownNat n, A.Num a, Elt a)
       => AccVector n a -> AccVector n a -> AccScalar a
 -- | the usual inner product of two vectors
 --
@@ -208,9 +208,9 @@ infixl 7 ^*^
 -- > ⎜. ⎟   ⎜. ⎟
 -- > ⎝vₙ⎠   ⎝wₙ⎠
 
-v ^.*^ w = AccScalar $ A.sum $ A.zipWith (*) (unVector v) (unVector w)
+v ^.^ w = AccScalar $ A.sum $ A.zipWith (*) (unVector v) (unVector w)
 
-infixl 7 ^.*^
+infixl 7 ^.^
 
 (#+#) :: forall m n a. (KnownNat m, KnownNat n, A.Num a, Elt a)
       => AccMatrix m n a -> AccMatrix m n a -> AccMatrix m n a
