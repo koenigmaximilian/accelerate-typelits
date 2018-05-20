@@ -7,9 +7,9 @@
 module Data.Array.Accelerate.TypeLits
               (
               -- * Types
-              AccScalar,
-              AccVector,
-              AccMatrix,
+              AccScalar(..),
+              AccVector(..),
+              AccMatrix(..),
               -- * Classes
               AccFunctor(..),
               -- * Constructors
