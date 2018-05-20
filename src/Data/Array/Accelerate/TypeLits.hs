@@ -282,11 +282,12 @@ infixl 7 #*#
 -- >     ⎜. ⎟   ⎜  .   ⎟
 -- >     ⎝xₙ⎠   ⎝ a*xₙ ⎠
 
-a .*^ v = let v' = unVector v
-          in AccVector $ A.map (* a) v'
+a .*^ v = let a' = A.the $ unScalar a
+              v' = unVector v
+          in AccVector $ A.map (* a') v'
 
 (./^) :: forall n a. (KnownNat n, A.Floating a, Elt a)
-      => Exp a -> AccVector n a -> AccVector n a
+      => AccScalar a -> AccVector n a -> AccVector n a
 -- | a convenient helper deviding every element of a vector
 --
 -- >     ⎛x₁⎞   ⎛ x₁/a ⎞
@@ -296,11 +297,12 @@ a .*^ v = let v' = unVector v
 -- >     ⎜. ⎟   ⎜  .   ⎟
 -- >     ⎜. ⎟   ⎜  .   ⎟
 -- >     ⎝xₙ⎠   ⎝ xₙ/a ⎠
-a ./^ v = let v' = unVector v
-          in AccVector $ A.map (/ a) v'
+a ./^ v = let a' = A.the $ unScalar a
+              v' = unVector v
+          in AccVector $ A.map (/ a') v'
           
 (.+^) :: forall n a. (KnownNat n, A.Num a, Elt a)
-      => Exp a -> AccVector n a -> AccVector n a
+      => AccScalar a -> AccVector n a -> AccVector n a
 -- | the usual multiplication of a scalar with a vector
 --
 -- >     ⎛x₁⎞   ⎛ a+x₁ ⎞
@@ -311,8 +313,9 @@ a ./^ v = let v' = unVector v
 -- >     ⎜. ⎟   ⎜  .   ⎟
 -- >     ⎝xₙ⎠   ⎝ a+xₙ ⎠
 
-a .+^ v = let v' = unVector v
-          in AccVector $ A.map (+ a) v'
+a .+^ v = let a' = A.the $ unScalar a
+              v' = unVector v
+          in AccVector $ A.map (+ a') v'
 
 infixl 7 .*^
 infixl 7 ./^
