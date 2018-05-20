@@ -180,7 +180,7 @@ infixl 6 ^+^
 infixl 6 ^-^
 
 (^*^) :: forall n a. (KnownNat n, A.Num a, Elt a)
-      => AccVector n a -> AccVector n a -> AccVector a
+      => AccVector n a -> AccVector n a -> AccVector n a
 -- | the usual outer product of two vectors
 --
 -- > ⎛v₁⎞   ⎛w₁⎞   ⎛ v₁*w₁ ⎞
