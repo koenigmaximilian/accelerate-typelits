@@ -271,7 +271,7 @@ v #*# w = AccMatrix $ A.fold1 (+)
 infixl 7 #*#
 
 (.*^) :: forall n a. (KnownNat n, A.Num a, Elt a)
-      => Exp a -> AccVector n a -> AccVector n a
+      => AppScalar a -> AccVector n a -> AccVector n a
 -- | the usual multiplication of a scalar with a vector
 --
 -- >     ⎛x₁⎞   ⎛ a*x₁ ⎞
