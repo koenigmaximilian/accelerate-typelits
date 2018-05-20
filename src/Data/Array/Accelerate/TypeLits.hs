@@ -120,8 +120,7 @@ zeroM = unsafeMkMatrix $ replicate (m'*n') 0
 
 ma #*^ va = let ma' = unMatrix ma
                 va' = unVector va
-            in AccVector $ A.fold1 (+)
-                         $ A.zipWith (*)
+            in AccVector $ A.zipWith (*)
                                     ma'
                                     (A.replicate (A.lift $ Z :. m' :. All) va')
   where m'  = fromIntegral $ natVal (Proxy :: Proxy m) :: Int
@@ -142,13 +141,57 @@ infixl 7 #*^
 
 va ^*# ma = let va' = unVector va
                 ma' = unMatrix ma
+            in AccVector $ A.zipWith (*)
+                                    (A.replicate (A.lift $ Z :. n' :. All) va')
+                                    ma'
+  where n'  = fromIntegral $ natVal (Proxy :: Proxy n) :: Int
+
+infixr 7 ^*#
+
+
+(#.^) :: forall m n a. (KnownNat m, KnownNat n, A.Num a, Elt a)
+      => AccMatrix m n a -> AccVector n a -> AccVector n a
+-- | the usual matrix-vector product
+--
+-- > ⎛ w₁₁ w₁₂ … w₁ₙ ⎞   ⎛x₁⎞   ⎛ w₁₁*x₁ + w₁₂*x₂ + … w₁ₙ*xₙ ⎞
+-- > ⎜ w₂₁ w₂₂ … w₂ₙ ⎟   ⎜x₂⎟   ⎜ w₂₁*x₁ + w₂₂*x₂ + … w₂ₙ*xₙ ⎟
+-- > ⎜  .   .     .  ⎟   ⎜. ⎟   ⎜  .          .          .   ⎟
+-- > ⎜  .   .     .  ⎟ ✕ ⎜. ⎟ = ⎜  .          .          .   ⎟
+-- > ⎜  .   .     .  ⎟   ⎜. ⎟   ⎜  .          .          .   ⎟
+-- > ⎜  .   .     .  ⎟   ⎜. ⎟   ⎜  .          .          .   ⎟
+-- > ⎝ wₘ₁ wₘ₂ … wₘₙ ⎠   ⎝xₙ⎠   ⎝ wₘ₁*x₁ + wₘ₂*x₂ + … wₘₙ*xₙ ⎠
+
+ma #.^ va = let ma' = unMatrix ma
+                va' = unVector va
+            in AccVector $ A.fold1 (+)
+                         $ A.zipWith (*)
+                                    ma'
+                                    (A.replicate (A.lift $ Z :. m' :. All) va')
+  where m'  = fromIntegral $ natVal (Proxy :: Proxy m) :: Int
+
+infixl 7 #.^
+
+(^.#) :: forall m n a. (KnownNat m, KnownNat n, A.Num a, Elt a)
+      => AccVector m a -> AccMatrix m n a -> AccVector n a
+-- | the usual vector-matrix product
+--
+-- > ⎛x₁⎞T  ⎛w₁₁ w₁₂ … w₁ₙ ⎞   ⎛ x₁*w₁₁ + x₂*w₁₂ + … xₙ*w₁ₙ ⎞
+-- > ⎜x₂⎟   ⎜w₂₁ w₂₂ … w₂ₙ ⎟   ⎜ x₁*w₂₁ + x₂*w₂₂ + … xₙ*w₂ₙ ⎟
+-- > ⎜. ⎟   ⎜ .   .     .  ⎟   ⎜  .         .           .   ⎟
+-- > ⎜. ⎟ ✕ ⎜ .   .     .  ⎟ = ⎜  .         .           .   ⎟
+-- > ⎜. ⎟   ⎜ .   .     .  ⎟   ⎜  .         .           .   ⎟
+-- > ⎜. ⎟   ⎜ .   .     .  ⎟   ⎜  .         .           .   ⎟
+-- > ⎝xₘ⎠   ⎝wₘ₁ wₘ₂ … wₘₙ ⎠   ⎝ x₁*wₘ₁ + x₂*wₘ₂ + … xₙ*wₘₙ ⎠
+
+va ^.# ma = let va' = unVector va
+                ma' = unMatrix ma
             in AccVector $ A.fold1 (+)
                          $ A.zipWith (*)
                                     (A.replicate (A.lift $ Z :. n' :. All) va')
                                     ma'
   where n'  = fromIntegral $ natVal (Proxy :: Proxy n) :: Int
 
-infixr 7 ^*#
+infixr 7 ^.#
 
 (^+^) :: forall n a. (KnownNat n, A.Num a, Elt a)
       => AccVector n a -> AccVector n a -> AccVector n a
