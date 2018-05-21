@@ -145,7 +145,7 @@ class AccMean a where
   mean ::
        forall b c. (Elt b, Real (Exp b), Elt c, Fractional c)
     => a b
-    -> AccScalar Double
+    -> AccScalar c
 
 instance AccMean AccScalar where
   mean (AccScalar a) = mean' a
@@ -159,9 +159,9 @@ instance forall m n. (KnownNat m, KnownNat n) => AccMean (AccMatrix m n) where
 -- mean' ::
 --      (Fractional f, Shape sh, Elt e, Num e) => Acc (Array sh e) -> AccScalar f
 mean' ::
-     forall sh e. (Shape sh, Elt e, Real (Exp e))
+     forall sh e. (Shape sh, Elt e, Real (Exp e), Fractional c)
   => Acc (Array sh e)
-  -> AccScalar Double
+  -> AccScalar c
 mean' x =
   AccScalar $
   A.unit $ realToFrac (A.the (A.sum (A.flatten x))) / fromIntegral (A.size x)
