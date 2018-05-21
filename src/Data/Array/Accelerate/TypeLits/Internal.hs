@@ -132,11 +132,11 @@ instance AccApply AccScalar where
   apply f (AccScalar a) = AccScalar (f a)
 
 instance forall n. (KnownNat n) => AccApply (AccVector n) where
-  type AccShape AccScalar = DIM1
+  type AccShape (AccVector n) = DIM1
   apply f (AccVector a) = AccVector (f a)
 
 instance forall m n. (KnownNat m, KnownNat n) => AccApply (AccMatrix m n) where
-  type AccShape AccScalar = DIM2
+  type AccShape (AccMatrix m n) = DIM2
   apply f (AccMatrix a) = AccMatrix (f a)
 
 mkVector ::
