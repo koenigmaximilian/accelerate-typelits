@@ -159,7 +159,8 @@ v1 ^**^ v2 =
 infixl 7 ^**^
 
 (#*^) ::
-     forall m n a. (KnownNat m, KnownNat n, A.Num a, A.Num b, A.Num c, Elt a)
+     forall m n a b c.
+     (KnownNat m, KnownNat n, A.Num a, A.Num b, A.Num c, Elt a)
   => AccMatrix m n a
   -> AccVector n b
   -> AccMatrix m n c
@@ -182,7 +183,8 @@ ma #*^ va =
 infixl 7 #*^
 
 (^*#) ::
-     forall m n a. (KnownNat m, KnownNat n, A.Num a, A.Num b, A.Num c, Elt a)
+     forall m n a b c.
+     (KnownNat m, KnownNat n, A.Num a, A.Num b, A.Num c, Elt a)
   => AccVector m a
   -> AccMatrix m n b
   -> AccMatrix m n c
