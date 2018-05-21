@@ -151,8 +151,8 @@ v1 ^**^ v2 =
    in AccMatrix $
       A.zipWith
         (*)
-        (A.replicate (A.lift $ Any :. All :. n') x)
-        (A.replicate (A.lift $ Any :. m' :. All) y)
+        (A.replicate (A.lift $ Z :. All :. n') v1')
+        (A.replicate (A.lift $ Z :. m' :. All) v2')
   where
     n' = fromIntegral $ natVal (Proxy :: Proxy n)
     m' = fromIntegral $ natVal (Proxy :: Proxy m)
