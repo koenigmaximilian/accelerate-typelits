@@ -5,7 +5,10 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE PartialTypeSignatures #-}
 
-module Data.Array.Accelerate.TypeLits where
+module Data.Array.Accelerate.TypeLits
+  ( Data.Array.Accelerate.TypeLits
+  , Internal
+  ) where
   {-
   ( AccScalar(..)
   , AccVector(..)
@@ -65,7 +68,7 @@ import Data.Array.Accelerate
   , Exp
   , Z(Z)
   )
-import Data.Array.Accelerate.TypeLits.Internal
+import Data.Array.Accelerate.TypeLits.Internal as Internal
 import Data.Proxy (Proxy(..))
 import GHC.TypeLits (KnownNat, natVal)
 
