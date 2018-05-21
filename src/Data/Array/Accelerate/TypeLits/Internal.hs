@@ -140,20 +140,20 @@ instance forall m n. (KnownNat m, KnownNat n) => AccApply (AccMatrix m n) where
   type AccShape (AccMatrix m n) = DIM2
   apply f (AccMatrix a) = AccMatrix (f a)
 -}
-class Mean a where
+class AccMean a where
   mean :: (Fractional b) => a -> AccScalar b
   mean' ::
        (Fractional (Exp e), Shape sh, Elt e) => Acc (Array sh e) -> AccScalar e
   mean' x =
     AccScalar $ A.unit $ A.the (A.sum (A.flatten x)) / fromIntegral (A.size x)
 
-instance AccApply AccScalar where
+instance AccMean AccScalar where
   mean (AccScalar a) = mean' a
 
-instance forall n. (KnownNat n) => AccApply (AccVector n) where
+instance forall n. (KnownNat n) => AccMean (AccVector n) where
   mean (AccVector a) = mean' a
 
-instance forall m n. (KnownNat m, KnownNat n) => AccApply (AccMatrix m n) where
+instance forall m n. (KnownNat m, KnownNat n) => AccMean (AccMatrix m n) where
   mean (AccMatrix a) = mean' a
 
 mkVector ::
