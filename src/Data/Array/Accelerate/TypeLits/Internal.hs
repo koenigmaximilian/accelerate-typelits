@@ -99,7 +99,7 @@ instance forall m n a. (KnownNat m, KnownNat n, Arbitrary a, Eq a, Elt a) =>
 -- | a functor like instance for a functor like instance for Accelerate computations
 -- instead of working with simple functions `(a -> b)` this uses (Exp a -> Exp b)
 class AccFunctor f where
-  afmap ::
+  afmap, (<$$>) ::
        forall a b. (Elt a, Elt b)
     => (Exp a -> Exp b)
     -> f a
