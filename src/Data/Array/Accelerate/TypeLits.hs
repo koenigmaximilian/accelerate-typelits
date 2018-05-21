@@ -79,9 +79,6 @@ f $^ v = AccVector $ f $ unVector v
 
 f $# m = AccMatrix $ f $ unMatrix m
 -}
-mean =
-  apply $ \x -> A.unit $ A.the (A.sum (A.flatten x)) / fromIntegral (A.size x)
-
 identityMatrix ::
      forall n a. (KnownNat n, Num a, A.Num a, Elt a)
   => AccMatrix n n a
