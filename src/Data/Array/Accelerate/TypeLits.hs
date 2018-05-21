@@ -6,7 +6,6 @@
 {-# LANGUAGE PartialTypeSignatures #-}
 
 module Data.Array.Accelerate.TypeLits
-              -- * Types
   ( AccScalar(..)
   , AccVector(..)
   , AccMatrix(..)
