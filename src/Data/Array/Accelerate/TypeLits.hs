@@ -68,7 +68,7 @@ import Data.Array.Accelerate
   , Exp
   , Z(Z)
   )
-import Data.Array.Accelerate.TypeLits.Internal as Internal
+import Data.Array.Accelerate.TypeLits.Internal
 import Data.Proxy (Proxy(..))
 import GHC.TypeLits (KnownNat, natVal)
 
