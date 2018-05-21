@@ -28,6 +28,7 @@ import Data.Array.Accelerate
   , Shape
   , Z(Z)
   )
+import qualified Data.Array.Accelerate.Classes.ToFloating as A
 import qualified Data.Array.Accelerate.Interpreter as I
 import Data.Proxy (Proxy(..))
 
@@ -143,12 +144,12 @@ instance forall m n. (KnownNat m, KnownNat n) => AccApply (AccMatrix m n) where
 -}
 class AccMean a where
   mean ::
-       forall b c. (Elt b, Real (Exp b), Elt c, Fractional (Exp c))
+       forall b c. (Elt b, Num (Exp b), Elt c, Fractional (Exp c))
     => a b
     -> AccScalar c
 
 instance AccMean AccScalar where
-  mean (AccScalar a) = mean' a
+  mean (AccScalar a) = mean' a 1
 
 instance forall n. (KnownNat n) => AccMean (AccVector n) where
   mean (AccVector a) = mean' a
@@ -159,11 +160,12 @@ instance forall m n. (KnownNat m, KnownNat n) => AccMean (AccMatrix m n) where
 -- mean' ::
 --      (Fractional f, Shape sh, Elt e, Num e) => Acc (Array sh e) -> AccScalar f
 mean' ::
-     forall sh e c. (Shape sh, Elt e, Real (Exp e), Elt c, Fractional (Exp c))
+     forall sh e c. (Shape sh, Elt e, Num (Exp e), Elt c, Fractional (Exp c))
   => Acc (Array sh e)
   -> AccScalar c
 mean' x =
-  AccScalar $ A.unit $ (A.the (A.sum (A.flatten x))) / fromIntegral (A.size x)
+  AccScalar $
+  A.unit $ A.toFloating (A.the (A.sum (A.flatten x))) / A.toFloating (A.size x)
 
 mkVector ::
      forall n a. (KnownNat n, Elt a)
