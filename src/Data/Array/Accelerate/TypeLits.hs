@@ -485,7 +485,7 @@ v #**. i
     error $
     "no negative exponents allowed in matrix exponetiation," ++
     "inverse function not yet implemented"
-  | otherwise = (v# **. (i - 1)) #*# v
+  | otherwise = (v #**. (i - 1)) #*# v
 
 infixr 8 #**.
 
