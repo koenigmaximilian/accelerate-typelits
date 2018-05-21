@@ -152,8 +152,8 @@ instance forall n. (KnownNat n) => AccMean (AccVector n) where
 instance forall m n. (KnownNat m, KnownNat n) => AccMean (AccMatrix m n) where
   mean (AccMatrix a) = mean' a
 
-mean' ::
-     (Fractional f, Shape sh, Elt e, Num e) => Acc (Array sh e) -> AccScalar f
+-- mean' ::
+--      (Fractional f, Shape sh, Elt e, Num e) => Acc (Array sh e) -> AccScalar f
 mean' x =
   AccScalar $ A.unit $ A.the (A.sum (A.flatten x)) / fromIntegral (A.size x)
 
