@@ -28,7 +28,6 @@ import Data.Array.Accelerate
   , Shape
   , Z(Z)
   )
-import qualified Data.Array.Accelerate.Classes.ToFloating as A
 import qualified Data.Array.Accelerate.Interpreter as I
 import Data.Proxy (Proxy(..))
 
