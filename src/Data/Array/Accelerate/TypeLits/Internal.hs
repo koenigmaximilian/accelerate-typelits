@@ -159,7 +159,7 @@ instance forall m n. (KnownNat m, KnownNat n) => AccMean (AccMatrix m n) where
 -- mean' ::
 --      (Fractional f, Shape sh, Elt e, Num e) => Acc (Array sh e) -> AccScalar f
 mean' ::
-     forall sh e. (Shape sh, Elt e)
+     forall sh e. (Shape sh, Elt e, Num e)
   => Acc (Array sh e)
   -> AccScalar Double
 mean' x =
