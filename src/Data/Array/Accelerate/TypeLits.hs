@@ -124,7 +124,7 @@ zeroM = unsafeMkMatrix $ replicate (m' * n') 0
      forall m n a. (KnownNat m, KnownNat n, A.Num a, Elt a)
   => AccMatrix m n a
   -> AccVector n a
-  -> AccVector n a
+  -> AccMatrix m n a
 -- | the usual matrix-vector product
 --
 -- > ⎛ w₁₁ w₁₂ … w₁ₙ ⎞   ⎛x₁⎞   ⎛ w₁₁*x₁ + w₁₂*x₂ + … w₁ₙ*xₙ ⎞
@@ -147,7 +147,7 @@ infixl 7 #*^
      forall m n a. (KnownNat m, KnownNat n, A.Num a, Elt a)
   => AccVector m a
   -> AccMatrix m n a
-  -> AccVector n a
+  -> AccMatrix m n a
 -- | the usual vector-matrix product
 --
 -- > ⎛x₁⎞T  ⎛w₁₁ w₁₂ … w₁ₙ ⎞   ⎛ x₁*w₁₁ + x₂*w₁₂ + … xₙ*w₁ₙ ⎞
