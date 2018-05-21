@@ -6,8 +6,8 @@
 {-# LANGUAGE PartialTypeSignatures #-}
 
 module Data.Array.Accelerate.TypeLits
-  ( Data.Array.Accelerate.TypeLits
-  , Internal
+  ( module Data.Array.Accelerate.TypeLits
+  , module Data.Array.Accelerate.TypeLits.Internal
   ) where
   {-
   ( AccScalar(..)
