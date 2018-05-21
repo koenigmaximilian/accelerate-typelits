@@ -143,9 +143,9 @@ instance forall m n. (KnownNat m, KnownNat n) => AccApply (AccMatrix m n) where
 -}
 class AccMean a where
   mean ::
-       forall b c. (Elt b, Real (Exp b), Elt c, Fractional (Exp c))
+       forall b c. (Elt b, Fractional (Exp b))
     => a b
-    -> AccScalar c
+    -> AccScalar b
 
 instance AccMean AccScalar where
   mean (AccScalar a) = mean' a
