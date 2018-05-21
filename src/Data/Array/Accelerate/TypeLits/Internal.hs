@@ -24,6 +24,7 @@ import Data.Array.Accelerate
   , DIM2
   , Elt
   , Exp
+  , Shape
   , Z(Z)
   )
 import qualified Data.Array.Accelerate.Interpreter as I
