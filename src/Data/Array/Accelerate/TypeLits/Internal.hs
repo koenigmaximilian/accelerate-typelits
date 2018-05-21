@@ -7,6 +7,7 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE PartialTypeSignatures #-}
+{-# LANGUAGE AllowAmbiguousTypes #-}
 
 module Data.Array.Accelerate.TypeLits.Internal where
 
