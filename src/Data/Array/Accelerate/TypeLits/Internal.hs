@@ -121,7 +121,7 @@ instance forall m n. (KnownNat m, KnownNat n) =>
 class AccApply f where
   apply ::
        forall a b. (Elt a, Elt b)
-    => (Exp a -> Exp b)
+    => (Acc (Array c a) -> Acc (Array c b))
     -> f a
     -> f b
 
