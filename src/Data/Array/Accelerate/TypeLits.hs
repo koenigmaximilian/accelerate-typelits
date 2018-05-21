@@ -60,29 +60,24 @@ import qualified Data.Array.Accelerate as A
 
 import Data.Array.Accelerate
   ( (:.)((:.))
-  , Acc
   , All(All)
   , Any(Any)
-  , Array
   , DIM2
   , DIM3
   , Elt
   , Exp
-  , Shape
   , Z(Z)
   )
 import Data.Array.Accelerate.TypeLits.Internal
 import Data.Proxy (Proxy(..))
 import GHC.TypeLits (KnownNat, natVal)
 
-{-
-class Mean a b where
-  mean :: a -> AccScalar b
-  mean' ::
-       (Fractional (Exp e), Shape sh, Elt e) => Acc (Array sh e) -> AccScalar b
-  mean' x =
-    AccScalar $ A.unit A.the (A.sum (A.flatten x)) / fromIntegral (A.size x)
--}
+f $. s = AccScalar $ f $ unScalar s
+
+f $^ v = AccVector $ f $ unVector v
+
+f $# m = AccMatrix $ f $ unMatrix m
+
 identityMatrix ::
      forall n a. (KnownNat n, Num a, A.Num a, Elt a)
   => AccMatrix n n a
