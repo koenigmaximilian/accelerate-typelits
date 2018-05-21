@@ -144,7 +144,7 @@ class AccMean a where
   mean ::
        forall b c. (Elt b, Elt c, Fractional c)
     => a b
-    -> AccScalar c
+    -> AccScalar Double
 
 instance AccMean AccScalar where
   mean (AccScalar a) = mean' a
