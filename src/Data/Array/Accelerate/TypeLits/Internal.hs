@@ -143,7 +143,7 @@ instance forall m n. (KnownNat m, KnownNat n) => AccApply (AccMatrix m n) where
 -}
 class AccMean a where
   mean ::
-       forall b. (Elt b, A.ToFloating (Exp b))
+       forall b. (Elt b, A.ToFloating b Double)
     => a b
     -> AccScalar Double
 
