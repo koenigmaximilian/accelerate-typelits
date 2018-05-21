@@ -120,7 +120,7 @@ instance forall m n. (KnownNat m, KnownNat n) =>
 -- | a functor like instance for a functor like instance for Accelerate computations
 -- instead of working with simple functions `(a -> b)` this uses (Exp a -> Exp b)
 class AccApply f where
-  type AccShape f :: * -> *
+  type AccShape f :: *
   apply ::
        forall a b. (Elt a, Elt b)
     => (Acc (Array (AccShape f) a) -> Acc (Array (AccShape f) b))
