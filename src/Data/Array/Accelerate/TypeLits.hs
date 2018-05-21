@@ -72,11 +72,14 @@ import Data.Array.Accelerate.TypeLits.Internal
 import Data.Proxy (Proxy(..))
 import GHC.TypeLits (KnownNat, natVal)
 
+{-
 f $. s = AccScalar $ f $ unScalar s
 
 f $^ v = AccVector $ f $ unVector v
 
 f $# m = AccMatrix $ f $ unMatrix m
+-}
+mean = apply $ A.the (A.sum (A.flatten x)) / fromIntegral (A.size x)
 
 identityMatrix ::
      forall n a. (KnownNat n, Num a, A.Num a, Elt a)
