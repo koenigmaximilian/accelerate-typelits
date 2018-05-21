@@ -144,7 +144,7 @@ class AccMean a where
   mean :: (Num b, Elt c, Fractional c) => a b -> AccScalar c
 
 instance AccMean AccScalar where
-  mean a = a
+  mean (AccScalar a) = mean' a
 
 instance forall n. (KnownNat n) => AccMean (AccVector n) where
   mean (AccVector a) = mean' a
