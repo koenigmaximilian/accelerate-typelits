@@ -163,7 +163,8 @@ mean' ::
   => Acc (Array sh e)
   -> AccScalar Double
 mean' x =
-  AccScalar $ A.unit $ A.the (A.sum (A.flatten x)) / fromIntegral (A.size x)
+  AccScalar $
+  A.unit $ realToFrac (A.the (A.sum (A.flatten x))) / fromIntegral (A.size x)
 
 mkVector ::
      forall n a. (KnownNat n, Elt a)
