@@ -143,10 +143,9 @@ instance forall m n. (KnownNat m, KnownNat n) => AccApply (AccMatrix m n) where
 -}
 class AccMean a where
   mean ::
-       forall b c.
-       (Elt b, Elt c, Num (Exp b), Floating (Exp c), A.ToFloating b c)
+       forall b. (Elt b, Num (Exp b), A.ToFloating b Double)
     => a b
-    -> AccScalar c
+    -> AccScalar Double
 
 instance AccMean AccScalar where
   mean (AccScalar a) = mean' a
@@ -160,10 +159,9 @@ instance forall m n. (KnownNat m, KnownNat n) => AccMean (AccMatrix m n) where
 -- mean' ::
 --      (Fractional f, Shape sh, Elt e, Num e) => Acc (Array sh e) -> AccScalar f
 mean' ::
-     forall sh e c.
-     (Shape sh, Elt e, Elt c, Num (Exp e), Floating (Exp c), A.ToFloating e c)
+     forall sh e. (Shape sh, Elt e, Num (Exp e), A.ToFloating e Double)
   => Acc (Array sh e)
-  -> AccScalar c
+  -> AccScalar Double
 mean' x =
   AccScalar $
   A.unit $ A.toFloating (A.the (A.sum (A.flatten x))) / A.toFloating (A.size x)
