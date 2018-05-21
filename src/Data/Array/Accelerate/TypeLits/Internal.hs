@@ -120,19 +120,23 @@ instance forall m n. (KnownNat m, KnownNat n) =>
 -- | a functor like instance for a functor like instance for Accelerate computations
 -- instead of working with simple functions `(a -> b)` this uses (Exp a -> Exp b)
 class AccApply f where
+  type AccShape f :: * -> *
   apply ::
-       forall a b sh. (Elt a, Elt b, Shape sh)
-    => (Acc (Array sh a) -> Acc (Array sh b))
+       forall a b. (Elt a, Elt b)
+    => (Acc (Array AccShape a) -> Acc (Array AccShape b))
     -> f a
     -> f b
 
 instance AccApply AccScalar where
+  type AccShape AccScalar = DIM0
   apply f (AccScalar a) = AccScalar (f a)
 
 instance forall n. (KnownNat n) => AccApply (AccVector n) where
+  type AccShape AccScalar = DIM1
   apply f (AccVector a) = AccVector (f a)
 
 instance forall m n. (KnownNat m, KnownNat n) => AccApply (AccMatrix m n) where
+  type AccShape AccScalar = DIM2
   apply f (AccMatrix a) = AccMatrix (f a)
 
 mkVector ::
