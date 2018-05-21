@@ -159,11 +159,10 @@ v1 ^**^ v2 =
 infixl 7 ^**^
 
 (#*^) ::
-     forall m n a b c.
-     (KnownNat m, KnownNat n, A.Num a, A.Num b, A.Num c, Elt a)
+     forall m n a. (KnownNat m, KnownNat n, A.Num a, Elt a)
   => AccMatrix m n a
-  -> AccVector n b
-  -> AccMatrix m n c
+  -> AccVector n a
+  -> AccMatrix m n a
 -- | the usual matrix-vector product
 --
 -- > ⎛ w₁₁ w₁₂ … w₁ₙ ⎞   ⎛x₁⎞   ⎛ w₁₁*x₁ + w₁₂*x₂ + … w₁ₙ*xₙ ⎞
@@ -183,11 +182,10 @@ ma #*^ va =
 infixl 7 #*^
 
 (^*#) ::
-     forall m n a b c.
-     (KnownNat m, KnownNat n, A.Num a, A.Num b, A.Num c, Elt a)
+     forall m n a. (KnownNat m, KnownNat n, A.Num a, Elt a)
   => AccVector m a
-  -> AccMatrix m n b
-  -> AccMatrix m n c
+  -> AccMatrix m n a
+  -> AccMatrix m n a
 -- | the usual vector-matrix product
 --
 -- > ⎛x₁⎞T  ⎛w₁₁ w₁₂ … w₁ₙ ⎞   ⎛ x₁*w₁₁ + x₂*w₁₂ + … xₙ*w₁ₙ ⎞
