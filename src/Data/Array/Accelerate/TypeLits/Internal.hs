@@ -117,6 +117,7 @@ instance forall m n. (KnownNat m, KnownNat n) =>
          AccFunctor (AccMatrix m n) where
   afmap f (AccMatrix a) = AccMatrix (A.map f a)
 
+{-
 -- | a functor like instance for a functor like instance for Accelerate computations
 -- instead of working with simple functions `(a -> b)` this uses (Exp a -> Exp b)
 class AccApply f where
@@ -138,6 +139,13 @@ instance forall n. (KnownNat n) => AccApply (AccVector n) where
 instance forall m n. (KnownNat m, KnownNat n) => AccApply (AccMatrix m n) where
   type AccShape (AccMatrix m n) = DIM2
   apply f (AccMatrix a) = AccMatrix (f a)
+-}
+class Mean a where
+  mean :: (Fractional b) => a -> AccScalar b
+  mean' ::
+       (Fractional (Exp e), Shape sh, Elt e) => Acc (Array sh e) -> AccScalar e
+  mean' x =
+    AccScalar $ A.unit $ A.the (A.sum (A.flatten x)) / fromIntegral (A.size x)
 
 mkVector ::
      forall n a. (KnownNat n, Elt a)
