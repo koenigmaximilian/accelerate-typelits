@@ -121,7 +121,7 @@ instance forall m n. (KnownNat m, KnownNat n) =>
 -- instead of working with simple functions `(a -> b)` this uses (Exp a -> Exp b)
 class AccApply f where
   apply ::
-       forall a b. (Elt a, Elt b, Shape sh)
+       forall a b sh. (Elt a, Elt b, Shape sh)
     => (Acc (Array sh a) -> Acc (Array sh b))
     -> f a
     -> f b
