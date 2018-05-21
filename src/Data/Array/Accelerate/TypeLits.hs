@@ -75,16 +75,14 @@ import Data.Array.Accelerate.TypeLits.Internal
 import Data.Proxy (Proxy(..))
 import GHC.TypeLits (KnownNat, natVal)
 
+{-
 class Mean a b where
   mean :: a -> AccScalar b
   mean' ::
        (Fractional (Exp e), Shape sh, Elt e) => Acc (Array sh e) -> AccScalar b
   mean' x =
     AccScalar $ A.unit A.the (A.sum (A.flatten x)) / fromIntegral (A.size x)
-
-instance AccApply a where
-  apply :: a -> a
-
+-}
 identityMatrix ::
      forall n a. (KnownNat n, Num a, A.Num a, Elt a)
   => AccMatrix n n a
