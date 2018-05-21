@@ -72,13 +72,12 @@ import Data.Array.Accelerate.TypeLits.Internal
 import Data.Proxy (Proxy(..))
 import GHC.TypeLits (KnownNat, natVal)
 
-{-
 f $. s = AccScalar $ f $ unScalar s
 
 f $^ v = AccVector $ f $ unVector v
 
 f $# m = AccMatrix $ f $ unMatrix m
--}
+
 identityMatrix ::
      forall n a. (KnownNat n, Num a, A.Num a, Elt a)
   => AccMatrix n n a
