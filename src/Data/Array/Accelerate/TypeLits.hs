@@ -131,6 +131,57 @@ zeroM = unsafeMkMatrix $ replicate (m' * n') 0
     n' = fromIntegral $ natVal (Proxy :: Proxy n)
     m' = fromIntegral $ natVal (Proxy :: Proxy m)
 
+(^**^) ::
+     forall m n a. (KnownNat m, KnownNat n, A.Num a, Elt a)
+  => AccVector m a
+  -> AccVector n a
+  -> AccMatrix m n a
+-- | the usual matrix-vector product
+--
+-- > ⎛ w₁₁ w₁₂ … w₁ₙ ⎞   ⎛x₁⎞   ⎛ w₁₁*x₁ + w₁₂*x₂ + … w₁ₙ*xₙ ⎞
+-- > ⎜ w₂₁ w₂₂ … w₂ₙ ⎟   ⎜x₂⎟   ⎜ w₂₁*x₁ + w₂₂*x₂ + … w₂ₙ*xₙ ⎟
+-- > ⎜  .   .     .  ⎟   ⎜. ⎟   ⎜  .          .          .   ⎟
+-- > ⎜  .   .     .  ⎟ ✕ ⎜. ⎟ = ⎜  .          .          .   ⎟
+-- > ⎜  .   .     .  ⎟   ⎜. ⎟   ⎜  .          .          .   ⎟
+-- > ⎜  .   .     .  ⎟   ⎜. ⎟   ⎜  .          .          .   ⎟
+-- > ⎝ wₘ₁ wₘ₂ … wₘₙ ⎠   ⎝xₙ⎠   ⎝ wₘ₁*x₁ + wₘ₂*x₂ + … wₘₙ*xₙ ⎠
+v1 ^**^ v2 =
+  let v1' = unVector v1
+      v2' = unVector v2
+   in AccMatrix $
+      A.zipWith
+        (*)
+        (A.replicate (A.lift $ Any :. All :. n') x)
+        (A.replicate (A.lift $ Any :. m' :. All) y)
+  where
+    n' = fromIntegral $ natVal (Proxy :: Proxy n)
+    m' = fromIntegral $ natVal (Proxy :: Proxy m)
+
+infixl 7 ^**^
+
+(^*#) ::
+     forall m n a. (KnownNat m, KnownNat n, A.Num a, Elt a)
+  => AccVector m a
+  -> AccMatrix m n a
+  -> AccMatrix m n a
+-- | the usual vector-matrix product
+--
+-- > ⎛x₁⎞T  ⎛w₁₁ w₁₂ … w₁ₙ ⎞   ⎛ x₁*w₁₁ + x₂*w₁₂ + … xₙ*w₁ₙ ⎞
+-- > ⎜x₂⎟   ⎜w₂₁ w₂₂ … w₂ₙ ⎟   ⎜ x₁*w₂₁ + x₂*w₂₂ + … xₙ*w₂ₙ ⎟
+-- > ⎜. ⎟   ⎜ .   .     .  ⎟   ⎜  .         .           .   ⎟
+-- > ⎜. ⎟ ✕ ⎜ .   .     .  ⎟ = ⎜  .         .           .   ⎟
+-- > ⎜. ⎟   ⎜ .   .     .  ⎟   ⎜  .         .           .   ⎟
+-- > ⎜. ⎟   ⎜ .   .     .  ⎟   ⎜  .         .           .   ⎟
+-- > ⎝xₘ⎠   ⎝wₘ₁ wₘ₂ … wₘₙ ⎠   ⎝ x₁*wₘ₁ + x₂*wₘ₂ + … xₙ*wₘₙ ⎠
+va ^*# ma =
+  let va' = unVector va
+      ma' = unMatrix ma
+   in AccMatrix $ A.zipWith (*) (A.replicate (A.lift $ Z :. n' :. All) va') ma'
+  where
+    n' = fromIntegral $ natVal (Proxy :: Proxy n) :: Int
+
+infixr 7 ^*#
+
 (#*^) ::
      forall m n a. (KnownNat m, KnownNat n, A.Num a, Elt a)
   => AccMatrix m n a
