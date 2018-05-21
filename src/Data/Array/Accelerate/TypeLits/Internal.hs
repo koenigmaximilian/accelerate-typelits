@@ -123,7 +123,7 @@ class AccApply f where
   type AccShape f :: * -> *
   apply ::
        forall a b. (Elt a, Elt b)
-    => (Acc (Array AccShape a) -> Acc (Array AccShape b))
+    => (Acc (Array (AccShape f) a) -> Acc (Array (AccShape f) b))
     -> f a
     -> f b
 
