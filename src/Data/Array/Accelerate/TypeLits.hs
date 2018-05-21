@@ -82,9 +82,8 @@ class Mean a b where
   mean' x =
     AccScalar $ A.unit A.the (A.sum (A.flatten x)) / fromIntegral (A.size x)
 
-instance Mean AccScalar
-
-mean x = A.the (A.sum (A.flatten x)) / fromIntegral (A.size x)
+instance AccApply a where
+  apply :: a -> a
 
 identityMatrix ::
      forall n a. (KnownNat n, Num a, A.Num a, Elt a)

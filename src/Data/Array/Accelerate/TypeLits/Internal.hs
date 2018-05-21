@@ -116,6 +116,24 @@ instance forall m n. (KnownNat m, KnownNat n) =>
          AccFunctor (AccMatrix m n) where
   afmap f (AccMatrix a) = AccMatrix (A.map f a)
 
+-- | a functor like instance for a functor like instance for Accelerate computations
+-- instead of working with simple functions `(a -> b)` this uses (Exp a -> Exp b)
+class AccApply f where
+  apply ::
+       forall a b. (Elt a, Elt b)
+    => (Exp a -> Exp b)
+    -> f a
+    -> f b
+
+instance AccApply AccScalar where
+  apply f (AccScalar a) = AccScalar (f a)
+
+instance forall n. (KnownNat n) => AccApply (AccVector n) where
+  apply f (AccVector a) = AccVector (f a)
+
+instance forall m n. (KnownNat m, KnownNat n) => AccApply (AccMatrix m n) where
+  apply f (AccMatrix a) = AccMatrix (f a)
+
 mkVector ::
      forall n a. (KnownNat n, Elt a)
   => [a]
