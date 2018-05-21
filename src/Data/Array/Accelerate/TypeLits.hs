@@ -5,7 +5,8 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE PartialTypeSignatures #-}
 
-module Data.Array.Accelerate.TypeLits
+module Data.Array.Accelerate.TypeLits where
+  {-
   ( AccScalar(..)
   , AccVector(..)
   , AccMatrix(..)
@@ -50,6 +51,7 @@ module Data.Array.Accelerate.TypeLits
   , zipWithV
   , zipWithM
   ) where
+-}
 
 import qualified Data.Array.Accelerate as A
 
@@ -66,6 +68,8 @@ import Data.Array.Accelerate
 import Data.Array.Accelerate.TypeLits.Internal
 import Data.Proxy (Proxy(..))
 import GHC.TypeLits (KnownNat, natVal)
+
+f ^$^ v = AccVector $ f $ unVector v
 
 identityMatrix ::
      forall n a. (KnownNat n, Num a, A.Num a, Elt a)
