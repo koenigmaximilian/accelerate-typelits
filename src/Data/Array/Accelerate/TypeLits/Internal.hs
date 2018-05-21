@@ -122,8 +122,8 @@ instance forall m n. (KnownNat m, KnownNat n) =>
 class AccApply f where
   type AccShape f :: *
   apply ::
-       forall a b. (Elt a, Elt b)
-    => (Acc (Array (AccShape f) a) -> Acc (Array (AccShape f) b))
+       forall a b c. (Elt a, Elt b)
+    => (Acc (Array (AccShape f) a) -> c)
     -> f a
     -> f b
 
