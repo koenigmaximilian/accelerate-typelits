@@ -137,7 +137,7 @@ zeroM = unsafeMkMatrix $ replicate (m' * n') 0
 ma #*^ va =
   let ma' = unMatrix ma
       va' = unVector va
-   in AccVector $ A.zipWith (*) ma' (A.replicate (A.lift $ Z :. m' :. All) va')
+   in AccMatrix $ A.zipWith (*) ma' (A.replicate (A.lift $ Z :. m' :. All) va')
   where
     m' = fromIntegral $ natVal (Proxy :: Proxy m) :: Int
 
@@ -160,7 +160,7 @@ infixl 7 #*^
 va ^*# ma =
   let va' = unVector va
       ma' = unMatrix ma
-   in AccVector $ A.zipWith (*) (A.replicate (A.lift $ Z :. n' :. All) va') ma'
+   in AccMatrix $ A.zipWith (*) (A.replicate (A.lift $ Z :. n' :. All) va') ma'
   where
     n' = fromIntegral $ natVal (Proxy :: Proxy n) :: Int
 
