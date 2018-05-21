@@ -147,6 +147,15 @@ class Mean a where
   mean' x =
     AccScalar $ A.unit $ A.the (A.sum (A.flatten x)) / fromIntegral (A.size x)
 
+instance AccApply AccScalar where
+  mean (AccScalar a) = mean' a
+
+instance forall n. (KnownNat n) => AccApply (AccVector n) where
+  mean (AccVector a) = mean' a
+
+instance forall m n. (KnownNat m, KnownNat n) => AccApply (AccMatrix m n) where
+  mean (AccMatrix a) = mean' a
+
 mkVector ::
      forall n a. (KnownNat n, Elt a)
   => [a]
